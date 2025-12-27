@@ -1,5 +1,9 @@
 ---
+/**
+ * About Page - Personal bio and contact information
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SOCIAL_LINKS } from '../config';
 ---
 
 <BaseLayout title="About" description="Learn more about me">
@@ -18,9 +22,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <h2>Connect</h2>
       <ul>
-        <li><a href="https://twitter.com/yourusername">Twitter</a></li>
-        <li><a href="https://github.com/yourusername">GitHub</a></li>
-        <li><a href="mailto:you@example.com">Email</a></li>
+        <li><a href={SOCIAL_LINKS.twitter}>Twitter</a></li>
+        <li><a href={SOCIAL_LINKS.github}>GitHub</a></li>
+        <li><a href={`mailto:${SOCIAL_LINKS.email}`}>Email</a></li>
       </ul>
     </div>
   </div>

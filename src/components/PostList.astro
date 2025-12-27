@@ -1,14 +1,13 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+/**
+ * PostList - Displays a list of blog posts
+ * Can optionally show summaries for the first N posts
+ */
+import type { PostListProps } from '../types';
 import PostRow from './PostRow.astro';
 import { calculateReadingTime } from '../lib/posts';
 
-export interface Props {
-  posts: CollectionEntry<'posts'>[];
-  showSummaryForFirst?: number;
-}
-
-const { posts, showSummaryForFirst = 2 } = Astro.props;
+const { posts, showSummaryForFirst = 2 } = Astro.props as PostListProps;
 ---
 
 {posts.length === 0 ? (

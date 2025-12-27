@@ -1,8 +1,18 @@
+/**
+ * Global Styles
+ * Base styles, typography, and prose styling for content
+ */
+
+/* Import Inter font family */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
 
 @layer base {
   * {
@@ -29,6 +39,10 @@
   }
 }
 
+/* ============================================
+   UTILITIES
+   ============================================ */
+
 @layer utilities {
   .motion-safe {
     transition-duration: 200ms;
@@ -42,11 +56,16 @@
   }
 }
 
+/* ============================================
+   PROSE - Content Styling
+   ============================================ */
+
 .prose {
   @apply text-text max-w-reading mx-auto;
   line-height: 1.65;
 }
 
+/* Headings */
 .prose h1 {
   @apply text-3xl font-semibold mb-6 mt-12;
 }
@@ -59,6 +78,7 @@
   @apply text-xl font-medium mb-3 mt-8;
 }
 
+/* Paragraphs and text */
 .prose p {
   @apply mb-6;
 }
@@ -67,6 +87,7 @@
   @apply text-text underline decoration-muted hover:decoration-text motion-safe;
 }
 
+/* Lists */
 .prose ul, .prose ol {
   @apply mb-6 pl-8 space-y-2;
 }
@@ -75,10 +96,12 @@
   @apply leading-body;
 }
 
+/* Blockquotes */
 .prose blockquote {
   @apply border-l-2 border-muted pl-6 text-muted italic my-6;
 }
 
+/* Code */
 .prose code {
   @apply bg-panel px-2 py-1 rounded text-sm font-mono;
 }
@@ -91,10 +114,12 @@
   @apply bg-transparent p-0;
 }
 
+/* Emphasis */
 .prose strong {
   @apply font-semibold;
 }
 
+/* Dividers */
 .prose hr {
   @apply border-border my-12;
 }

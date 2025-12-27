@@ -1,13 +1,17 @@
 {
   "name": "personal-site",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A clean, minimalist personal website and blog",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check",
+    "clean": "rm -rf dist .astro node_modules/.astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",
@@ -16,5 +20,11 @@
     "@astrojs/tailwind": "^5.1.2",
     "astro": "^5.0.0",
     "tailwindcss": "^3.4.0"
-  }
+  },
+  "keywords": [
+    "blog",
+    "personal-website",
+    "astro",
+    "tailwindcss"
+  ]
 }

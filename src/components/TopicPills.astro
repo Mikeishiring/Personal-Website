@@ -1,12 +1,10 @@
 ---
-import type { Topic } from '../lib/posts';
+/**
+ * TopicPills - Navigation pills for filtering posts by topic
+ */
+import type { TopicPillsProps } from '../types';
 
-export interface Props {
-  topics: readonly Topic[];
-  activeTopic?: string;
-}
-
-const { topics, activeTopic } = Astro.props;
+const { topics, activeTopic } = Astro.props as TopicPillsProps;
 ---
 
 <div class="flex flex-wrap gap-3" role="navigation" aria-label="Topics">
@@ -45,4 +43,3 @@ const { topics, activeTopic } = Astro.props;
     }
   }
 </style>
-

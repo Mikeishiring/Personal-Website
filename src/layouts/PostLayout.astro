@@ -1,13 +1,11 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+/**
+ * PostLayout - Layout for individual blog post pages
+ */
+import type { PostLayoutProps } from '../types';
 import BaseLayout from './BaseLayout.astro';
 
-export interface Props {
-  post: CollectionEntry<'posts'>;
-  readingTime: number;
-}
-
-const { post, readingTime } = Astro.props;
+const { post, readingTime } = Astro.props as PostLayoutProps;
 const { title, date, topic, summary } = post.data;
 
 const formattedDate = date.toLocaleDateString('en-US', {
@@ -57,4 +55,3 @@ const formattedDate = date.toLocaleDateString('en-US', {
     </footer>
   </article>
 </BaseLayout>
-

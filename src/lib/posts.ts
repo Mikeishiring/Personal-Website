@@ -1,24 +1,56 @@
-import type { CollectionEntry } from 'astro:content';
+/**
+ * Utility functions for working with blog posts
+ */
 
+import type { CollectionEntry } from 'astro:content';
+import { READING_SPEED } from '../config';
+
+export type Post = CollectionEntry<'posts'>;
+
+/**
+ * Calculates the estimated reading time for content
+ * @param content - The text content to analyze
+ * @returns Reading time in minutes (rounded up)
+ */
 export function calculateReadingTime(content: string): number {
-  const wordsPerMinute = 200;
   const words = content.trim().split(/\s+/).length;
-  return Math.ceil(words / wordsPerMinute);
+  return Math.ceil(words / READING_SPEED);
 }
 
-export function sortPostsByDate(posts: CollectionEntry<'posts'>[]) {
+/**
+ * Sorts posts by date in descending order (newest first)
+ * @param posts - Array of posts to sort
+ * @returns Sorted array of posts
+ */
+export function sortPostsByDate(posts: Post[]): Post[] {
   return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
-export function filterPublishedPosts(posts: CollectionEntry<'posts'>[]) {
+/**
+ * Filters out draft posts
+ * @param posts - Array of posts to filter
+ * @returns Array of published posts only
+ */
+export function filterPublishedPosts(posts: Post[]): Post[] {
   return posts.filter(post => !post.data.draft);
 }
 
-export function getPostsByTopic(posts: CollectionEntry<'posts'>[], topic: string) {
+/**
+ * Filters posts by topic
+ * @param posts - Array of posts to filter
+ * @param topic - Topic to filter by
+ * @returns Array of posts matching the topic
+ */
+export function getPostsByTopic(posts: Post[], topic: string): Post[] {
   return posts.filter(post => post.data.topic === topic);
 }
 
-export function groupPostsByYear(posts: CollectionEntry<'posts'>[]) {
+/**
+ * Groups posts by year
+ * @param posts - Array of posts to group
+ * @returns Object with years as keys and arrays of posts as values
+ */
+export function groupPostsByYear(posts: Post[]): Record<number, Post[]> {
   return posts.reduce((acc, post) => {
     const year = post.data.date.getFullYear();
     if (!acc[year]) {
@@ -26,9 +58,5 @@ export function groupPostsByYear(posts: CollectionEntry<'posts'>[]) {
     }
     acc[year].push(post);
     return acc;
-  }, {} as Record<number, CollectionEntry<'posts'>[]>);
+  }, {} as Record<number, Post[]>);
 }
-
-export const TOPICS = ['Talent', 'Product', 'Writing', 'Systems', 'Crypto'] as const;
-export type Topic = typeof TOPICS[number];
-

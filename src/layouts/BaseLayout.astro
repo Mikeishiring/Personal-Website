@@ -1,13 +1,14 @@
 ---
+/**
+ * BaseLayout - Main layout wrapper for all pages
+ * Provides consistent header, footer, and navigation
+ */
 import '../styles/global.css';
+import { SITE } from '../config';
+import type { BaseLayoutProps } from '../types';
 
-export interface Props {
-  title?: string;
-  description?: string;
-}
-
-const { title = 'Your Name', description = 'Writing about things that matter' } = Astro.props;
-const fullTitle = title === 'Your Name' ? title : `${title} · Your Name`;
+const { title = SITE.name, description = SITE.description } = Astro.props as BaseLayoutProps;
+const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`;
 ---
 
 <!doctype html>
@@ -28,7 +29,7 @@ const fullTitle = title === 'Your Name' ? title : `${title} · Your Name`;
             href="/" 
             class="text-text hover:text-text/80 motion-safe font-medium"
           >
-            Your Name
+            {SITE.name}
           </a>
           <div class="flex items-center gap-8">
             <a 
@@ -55,11 +56,10 @@ const fullTitle = title === 'Your Name' ? title : `${title} · Your Name`;
       <footer class="border-t border-border mt-24">
         <div class="max-w-home mx-auto px-6 py-8">
           <p class="text-faint text-sm">
-            © {new Date().getFullYear()} Your Name. All rights reserved.
+            © {new Date().getFullYear()} {SITE.name}. All rights reserved.
           </p>
         </div>
       </footer>
     </div>
   </body>
 </html>
-

@@ -1,9 +1,13 @@
 ---
+/**
+ * Topic Page - Displays posts filtered by a specific topic
+ */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopicPills from '../../components/TopicPills.astro';
 import PostList from '../../components/PostList.astro';
-import { TOPICS, filterPublishedPosts, sortPostsByDate, getPostsByTopic, type Topic } from '../../lib/posts';
+import { TOPICS, TOPIC_DESCRIPTIONS, type Topic } from '../../config';
+import { filterPublishedPosts, sortPostsByDate, getPostsByTopic } from '../../lib/posts';
 
 export async function getStaticPaths() {
   return TOPICS.map(topic => ({
@@ -16,21 +20,13 @@ const { topic } = Astro.props as { topic: Topic };
 const allPosts = await getCollection('posts');
 const publishedPosts = sortPostsByDate(filterPublishedPosts(allPosts));
 const topicPosts = getPostsByTopic(publishedPosts, topic);
-
-const topicDescriptions: Record<Topic, string> = {
-  'Talent': 'Thoughts on hiring, team building, and human potential',
-  'Product': 'Building things that matter',
-  'Writing': 'On craft, clarity, and the written word',
-  'Systems': 'Infrastructure, processes, and how things work',
-  'Crypto': 'Blockchains and decentralized systems',
-};
 ---
 
-<BaseLayout title={topic} description={topicDescriptions[topic]}>
+<BaseLayout title={topic} description={TOPIC_DESCRIPTIONS[topic]}>
   <div class="max-w-home mx-auto px-6 py-16">
     <header class="mb-12">
       <h1 class="text-4xl font-semibold mb-3 tracking-tight">{topic}</h1>
-      <p class="text-muted text-lg">{topicDescriptions[topic]}</p>
+      <p class="text-muted text-lg">{TOPIC_DESCRIPTIONS[topic]}</p>
     </header>
 
     <div class="mb-12">
@@ -42,4 +38,3 @@ const topicDescriptions: Record<Topic, string> = {
     </section>
   </div>
 </BaseLayout>
-

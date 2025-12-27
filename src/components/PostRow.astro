@@ -1,16 +1,20 @@
 ---
-export interface Props {
-  title: string;
-  date: Date;
-  readingTime: number;
-  topic: string;
-  tags?: string[];
-  summary: string;
-  href: string;
-  showSummary?: boolean;
-}
+/**
+ * PostRow - Individual post item in a list
+ * Shows title, metadata, and optional summary
+ */
+import type { PostRowProps } from '../types';
 
-const { title, date, readingTime, topic, tags, summary, href, showSummary = false } = Astro.props;
+const { 
+  title, 
+  date, 
+  readingTime, 
+  topic, 
+  tags, 
+  summary, 
+  href, 
+  showSummary = false 
+} = Astro.props as PostRowProps;
 
 const formattedDate = date.toLocaleDateString('en-US', {
   year: 'numeric',
@@ -55,4 +59,3 @@ const formattedDate = date.toLocaleDateString('en-US', {
     }
   }
 </style>
-

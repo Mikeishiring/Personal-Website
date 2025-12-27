@@ -1,9 +1,13 @@
 ---
+/**
+ * Homepage - Displays all blog posts with topic filtering
+ */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TopicPills from '../components/TopicPills.astro';
 import PostList from '../components/PostList.astro';
-import { TOPICS, filterPublishedPosts, sortPostsByDate } from '../lib/posts';
+import { TOPICS, SITE } from '../config';
+import { filterPublishedPosts, sortPostsByDate } from '../lib/posts';
 
 const allPosts = await getCollection('posts');
 const publishedPosts = sortPostsByDate(filterPublishedPosts(allPosts));
@@ -12,8 +16,8 @@ const publishedPosts = sortPostsByDate(filterPublishedPosts(allPosts));
 <BaseLayout>
   <div class="max-w-home mx-auto px-6 py-16">
     <header class="mb-12">
-      <h1 class="text-4xl font-semibold mb-3 tracking-tight">Your Name</h1>
-      <p class="text-muted text-lg">Writing about things that matter.</p>
+      <h1 class="text-4xl font-semibold mb-3 tracking-tight">{SITE.name}</h1>
+      <p class="text-muted text-lg">{SITE.description}</p>
     </header>
 
     <div class="mb-12">

@@ -1,62 +1,103 @@
-# Astro Starter Kit: Blog
+# Personal Website
 
-```sh
-npm create astro@latest -- --template blog
+A clean, minimalist personal website and blog built with Astro, featuring a dark theme and topic-based content organization.
+
+## ✨ Features
+
+- **Dark Theme** - Sleek dark design with subtle opacity-based color system
+- **Topic-Based Blog** - Organize posts by topics (Talent, Product, Writing, Systems, Crypto)
+- **Fast Performance** - Built with Astro for optimal loading speeds
+- **Responsive Design** - Works beautifully on all devices
+- **RSS Feed** - Stay connected with your readers
+- **Reading Time** - Automatic reading time estimates
+- **Type-Safe** - Full TypeScript support
+
+## 🚀 Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 📁 Project Structure
 
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
+```
+/
+├── public/              # Static assets
+│   └── favicon.svg
 ├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
+│   ├── components/      # Reusable UI components
+│   │   ├── PostList.astro
+│   │   ├── PostRow.astro
+│   │   └── TopicPills.astro
+│   ├── content/         # Blog posts and content
+│   │   └── posts/
+│   ├── layouts/         # Page layouts
+│   │   ├── BaseLayout.astro
+│   │   └── PostLayout.astro
+│   ├── lib/            # Utility functions
+│   │   └── posts.ts
+│   ├── pages/          # Routes
+│   │   ├── index.astro
+│   │   ├── about.astro
+│   │   ├── p/[slug].astro
+│   │   ├── t/[topic].astro
+│   │   └── rss.xml.js
+│   ├── styles/         # Global styles
+│   │   └── global.css
+│   └── content.config.ts
 ├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+├── tailwind.config.mjs
+└── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 📝 Adding New Posts
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Create a new `.md` file in `src/content/posts/`:
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+```markdown
+---
+title: "Your Post Title"
+date: "2025-01-01"
+topic: "Product"
+tags: ["tag1", "tag2"]
+summary: "A brief summary of your post."
+draft: false
+---
 
-Any static assets, like images, can be placed in the `public/` directory.
+Your content here...
+```
 
-## 🧞 Commands
+## 🎨 Customization
 
-All commands are run from the root of the project, from a terminal:
+### Update Site Info
+Edit `src/layouts/BaseLayout.astro` to change:
+- Site title
+- Site description
+- Your name
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### Update About Page
+Edit `src/pages/about.astro` with your bio and links.
 
-## 👀 Want to learn more?
+### Add/Remove Topics
+Edit `src/lib/posts.ts` to modify the `TOPICS` array.
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 🛠️ Tech Stack
 
-## Credit
+- [Astro](https://astro.build) - Static site generator
+- [Tailwind CSS](https://tailwindcss.com) - Utility-first CSS
+- [TypeScript](https://www.typescriptlang.org) - Type safety
+- [MDX](https://mdxjs.com) - Enhanced Markdown
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+## 📄 License
+
+MIT
