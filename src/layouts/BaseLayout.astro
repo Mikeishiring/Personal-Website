@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'Your Name', description = 'Writing about things that matter' } = Astro.props;
+const fullTitle = title === 'Your Name' ? title : `${title} · Your Name`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+  </head>
+  <body>
+    <div class="min-h-screen flex flex-col">
+      <header class="border-b border-border">
+        <nav class="max-w-home mx-auto px-6 py-6 flex items-center justify-between">
+          <a 
+            href="/" 
+            class="text-text hover:text-text/80 motion-safe font-medium"
+          >
+            Your Name
+          </a>
+          <div class="flex items-center gap-8">
+            <a 
+              href="/about" 
+              class="text-muted hover:text-text motion-safe"
+            >
+              About
+            </a>
+            <a 
+              href="/rss.xml" 
+              class="text-muted hover:text-text motion-safe"
+              aria-label="RSS Feed"
+            >
+              RSS
+            </a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="flex-1">
+        <slot />
+      </main>
+
+      <footer class="border-t border-border mt-24">
+        <div class="max-w-home mx-auto px-6 py-8">
+          <p class="text-faint text-sm">
+            © {new Date().getFullYear()} Your Name. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+

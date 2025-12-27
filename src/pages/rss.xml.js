@@ -1,16 +1,21 @@
-import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getCollection } from 'astro:content';
+import { filterPublishedPosts, sortPostsByDate } from '../lib/posts';
 
 export async function GET(context) {
-	const posts = await getCollection('blog');
-	return rss({
-		title: SITE_TITLE,
-		description: SITE_DESCRIPTION,
-		site: context.site,
-		items: posts.map((post) => ({
-			...post.data,
-			link: `/blog/${post.id}/`,
-		})),
-	});
+  const allPosts = await getCollection('posts');
+  const publishedPosts = sortPostsByDate(filterPublishedPosts(allPosts));
+
+  return rss({
+    title: 'Your Name',
+    description: 'Writing about things that matter',
+    site: context.site,
+    items: publishedPosts.map((post) => ({
+      title: post.data.title,
+      pubDate: post.data.date,
+      description: post.data.summary,
+      link: `/p/${post.slug}/`,
+    })),
+    customData: `<language>en-us</language>`,
+  });
 }

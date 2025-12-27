@@ -1,0 +1,58 @@
+---
+export interface Props {
+  title: string;
+  date: Date;
+  readingTime: number;
+  topic: string;
+  tags?: string[];
+  summary: string;
+  href: string;
+  showSummary?: boolean;
+}
+
+const { title, date, readingTime, topic, tags, summary, href, showSummary = false } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<a 
+  href={href}
+  class="block py-4 px-4 -mx-4 rounded-lg hover:bg-panel motion-safe group"
+>
+  <div class="flex flex-col gap-2">
+    <h3 class="text-lg font-medium text-text group-hover:underline">
+      {title}
+    </h3>
+    
+    <div class="flex items-center gap-2 text-sm text-muted tabular">
+      <time datetime={date.toISOString()}>{formattedDate}</time>
+      <span>·</span>
+      <span>{readingTime} min</span>
+      {tags && tags.length > 0 && (
+        <>
+          <span>·</span>
+          <span>{tags.join(', ')}</span>
+        </>
+      )}
+    </div>
+
+    {showSummary && summary && (
+      <p class="text-muted text-sm leading-relaxed mt-1">
+        {summary}
+      </p>
+    )}
+  </div>
+</a>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    a {
+      transition: none;
+    }
+  }
+</style>
+

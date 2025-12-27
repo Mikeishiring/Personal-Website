@@ -1,0 +1,48 @@
+---
+import type { Topic } from '../lib/posts';
+
+export interface Props {
+  topics: readonly Topic[];
+  activeTopic?: string;
+}
+
+const { topics, activeTopic } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-3" role="navigation" aria-label="Topics">
+  <a
+    href="/"
+    class:list={[
+      "px-4 py-2 rounded-full border motion-safe h-9 inline-flex items-center text-sm",
+      {
+        "border-border text-faint hover:bg-panel hover:text-text": activeTopic,
+        "bg-panel border-border text-text shadow-sm": !activeTopic
+      }
+    ]}
+  >
+    All
+  </a>
+  {topics.map((topic) => (
+    <a
+      href={`/t/${topic.toLowerCase()}`}
+      class:list={[
+        "px-4 py-2 rounded-full border motion-safe h-9 inline-flex items-center text-sm",
+        {
+          "bg-panel border-border text-text shadow-sm": activeTopic === topic,
+          "border-border text-faint hover:bg-panel hover:text-text": activeTopic !== topic
+        }
+      ]}
+    >
+      {topic}
+    </a>
+  ))}
+</div>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    a {
+      transition: none;
+    }
+  }
+</style>
+

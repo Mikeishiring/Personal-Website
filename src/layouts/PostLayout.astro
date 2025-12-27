@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  post: CollectionEntry<'posts'>;
+  readingTime: number;
+}
+
+const { post, readingTime } = Astro.props;
+const { title, date, topic, summary } = post.data;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={summary}>
+  <article class="max-w-reading mx-auto px-6 py-16">
+    <header class="mb-12">
+      <h1 class="text-4xl font-semibold mb-4 tracking-tight">{title}</h1>
+      
+      <div class="flex items-center gap-3 text-muted text-sm mb-6 tabular">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        <span>·</span>
+        <span>{readingTime} min read</span>
+        <span>·</span>
+        <a 
+          href={`/t/${topic.toLowerCase()}`}
+          class="px-3 py-1 rounded-full border border-border hover:bg-panel motion-safe"
+        >
+          {topic}
+        </a>
+      </div>
+
+      {summary && (
+        <p class="text-lg text-muted leading-body">{summary}</p>
+      )}
+    </header>
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    <footer class="mt-16 pt-8 border-t border-border">
+      <a 
+        href={`/t/${topic.toLowerCase()}`}
+        class="text-muted hover:text-text motion-safe inline-flex items-center gap-2"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to {topic}
+      </a>
+    </footer>
+  </article>
+</BaseLayout>
+

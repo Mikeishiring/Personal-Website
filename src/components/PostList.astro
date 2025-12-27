@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PostRow from './PostRow.astro';
+import { calculateReadingTime } from '../lib/posts';
+
+export interface Props {
+  posts: CollectionEntry<'posts'>[];
+  showSummaryForFirst?: number;
+}
+
+const { posts, showSummaryForFirst = 2 } = Astro.props;
+---
+
+{posts.length === 0 ? (
+  <div class="py-16 text-center">
+    <p class="text-muted">No posts yet in this topic.</p>
+  </div>
+) : (
+  <div class="space-y-1">
+    {posts.map((post, index) => (
+      <PostRow
+        title={post.data.title}
+        date={post.data.date}
+        readingTime={calculateReadingTime(post.body ?? '')}
+        topic={post.data.topic}
+        tags={post.data.tags}
+        summary={post.data.summary}
+        href={`/p/${post.id}`}
+        showSummary={index < showSummaryForFirst}
+      />
+    ))}
+  </div>
+)}
