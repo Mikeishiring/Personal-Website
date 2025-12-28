@@ -4,11 +4,11 @@
  */
 
 export const SITE = {
-  name: 'Your Name',
-  title: 'Your Name',
-  description: 'Writing about things that matter',
+  name: 'Mikeishiring',
+  title: 'Mikeishiring',
+  description: 'Ramblings, tools and knowledge from Talent Acquisiton in crypto',
   url: 'https://yourdomain.com',
-  author: 'Your Name',
+  author: 'Mikeishiring',
 } as const;
 
 export const TOPICS = ['Talent', 'Product', 'Writing', 'Systems', 'Crypto'] as const;
@@ -30,4 +30,5 @@ export const SOCIAL_LINKS = {
 export const READING_SPEED = 200; // words per minute
 
 export type Topic = (typeof TOPICS)[number];
+
 
