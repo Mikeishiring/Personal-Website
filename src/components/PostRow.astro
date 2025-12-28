@@ -5,15 +5,16 @@
  */
 import type { PostRowProps } from '../types';
 
-const { 
-  title, 
-  date, 
-  readingTime, 
-  topic, 
-  tags, 
-  summary, 
-  href, 
-  showSummary = false 
+const {
+  title,
+  date,
+  readingTime,
+  topic,
+  topicSlug,
+  tags,
+  summary,
+  href,
+  showSummary = false
 } = Astro.props as PostRowProps;
 
 const formattedDate = date.toLocaleDateString('en-US', {
@@ -23,9 +24,10 @@ const formattedDate = date.toLocaleDateString('en-US', {
 });
 ---
 
-<a 
+<a
   href={href}
   class="block py-4 px-4 -mx-4 rounded-lg hover:bg-panel motion-safe group"
+  data-topic={topicSlug}
 >
   <div class="flex flex-col gap-2">
     <h3 class="text-lg font-medium text-text group-hover:underline">
@@ -36,12 +38,8 @@ const formattedDate = date.toLocaleDateString('en-US', {
       <time datetime={date.toISOString()}>{formattedDate}</time>
       <span>·</span>
       <span>{readingTime} min</span>
-      {tags && tags.length > 0 && (
-        <>
-          <span>·</span>
-          <span>{tags.join(', ')}</span>
-        </>
-      )}
+      <span>·</span>
+      <span>{topic}</span>
     </div>
 
     {showSummary && summary && (

@@ -13,6 +13,7 @@ export interface PostRowProps {
   date: Date;
   readingTime: number;
   topic: string;
+  topicSlug?: string;
   tags?: string[];
   summary: string;
   href: string;

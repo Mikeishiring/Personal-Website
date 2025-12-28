@@ -14,13 +14,8 @@ const publishedPosts = sortPostsByDate(filterPublishedPosts(allPosts));
 ---
 
 <BaseLayout>
-  <div class="max-w-home mx-auto px-6 py-16">
-    <header class="mb-12">
-      <h1 class="text-4xl font-semibold mb-3 tracking-tight">{SITE.name}</h1>
-      <p class="text-muted text-lg">{SITE.description}</p>
-    </header>
-
-    <div class="mb-12">
+  <div class="max-w-2xl mx-auto px-6 py-12">
+    <div class="mb-8">
       <TopicPills topics={TOPICS} />
     </div>
 
@@ -30,3 +25,41 @@ const publishedPosts = sortPostsByDate(filterPublishedPosts(allPosts));
     </section>
   </div>
 </BaseLayout>
+
+<script>
+  function readHash() {
+    return location.hash.slice(1) || 'all';
+  }
+
+  function apply(topic) {
+    // Filter posts
+    document.querySelectorAll('[data-topic]').forEach(row => {
+      const rowTopic = row.dataset.topic;
+      row.hidden = !(topic === 'all' || rowTopic === topic);
+    });
+
+    // Update pill states
+    document.querySelectorAll('[data-topic]').forEach(pill => {
+      const pillTopic = pill.dataset.topic;
+      pill.setAttribute('aria-pressed', (pillTopic === topic).toString());
+    });
+  }
+
+  // Initialize on load
+  apply(readHash());
+
+  // Handle pill clicks
+  document.querySelectorAll('button[data-topic]').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const topic = e.currentTarget.dataset.topic;
+      history.pushState(null, '', '#' + topic);
+      apply(topic);
+    });
+  });
+
+  // Handle back/forward navigation
+  window.addEventListener('hashchange', () => {
+    apply(readHash());
+  });
+</script>

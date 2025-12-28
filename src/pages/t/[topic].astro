@@ -6,12 +6,12 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopicPills from '../../components/TopicPills.astro';
 import PostList from '../../components/PostList.astro';
-import { TOPICS, TOPIC_DESCRIPTIONS, type Topic } from '../../config';
+import { TOPICS, TOPIC_DESCRIPTIONS, TOPIC_SLUGS, type Topic } from '../../config';
 import { filterPublishedPosts, sortPostsByDate, getPostsByTopic } from '../../lib/posts';
 
 export async function getStaticPaths() {
   return TOPICS.map(topic => ({
-    params: { topic: topic.toLowerCase() },
+    params: { topic: TOPIC_SLUGS[topic] },
     props: { topic }
   }));
 }

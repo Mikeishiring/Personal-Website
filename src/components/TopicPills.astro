@@ -3,13 +3,14 @@
  * TopicPills - Navigation pills for filtering posts by topic
  */
 import type { TopicPillsProps } from '../types';
+import { TOPIC_SLUGS } from '../config';
 
 const { topics, activeTopic } = Astro.props as TopicPillsProps;
 ---
 
 <div class="flex flex-wrap gap-3" role="navigation" aria-label="Topics">
-  <a
-    href="/"
+  <button
+    data-topic="all"
     class:list={[
       "px-4 py-2 rounded-full border motion-safe h-9 inline-flex items-center text-sm",
       {
@@ -17,12 +18,13 @@ const { topics, activeTopic } = Astro.props as TopicPillsProps;
         "bg-panel border-border text-text shadow-sm": !activeTopic
       }
     ]}
+    aria-pressed={!activeTopic}
   >
     All
-  </a>
+  </button>
   {topics.map((topic) => (
-    <a
-      href={`/t/${topic.toLowerCase()}`}
+    <button
+      data-topic={TOPIC_SLUGS[topic as keyof typeof TOPIC_SLUGS]}
       class:list={[
         "px-4 py-2 rounded-full border motion-safe h-9 inline-flex items-center text-sm",
         {
@@ -30,9 +32,10 @@ const { topics, activeTopic } = Astro.props as TopicPillsProps;
           "border-border text-faint hover:bg-panel hover:text-text": activeTopic !== topic
         }
       ]}
+      aria-pressed={activeTopic === topic}
     >
       {topic}
-    </a>
+    </button>
   ))}
 </div>
 

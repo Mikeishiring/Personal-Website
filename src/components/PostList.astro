@@ -6,6 +6,7 @@
 import type { PostListProps } from '../types';
 import PostRow from './PostRow.astro';
 import { calculateReadingTime } from '../lib/posts';
+import { TOPIC_SLUGS } from '../config';
 
 const { posts, showSummaryForFirst = 2 } = Astro.props as PostListProps;
 ---
@@ -22,6 +23,7 @@ const { posts, showSummaryForFirst = 2 } = Astro.props as PostListProps;
         date={post.data.date}
         readingTime={calculateReadingTime(post.body ?? '')}
         topic={post.data.topic}
+        topicSlug={TOPIC_SLUGS[post.data.topic as keyof typeof TOPIC_SLUGS]}
         tags={post.data.tags}
         summary={post.data.summary}
         href={`/p/${post.id}`}

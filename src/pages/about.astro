@@ -3,7 +3,6 @@
  * About Page - Personal bio and contact information
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SOCIAL_LINKS } from '../config';
 ---
 
 <BaseLayout title="About" description="Learn more about me">
@@ -12,19 +11,17 @@ import { SOCIAL_LINKS } from '../config';
     
     <div class="prose">
       <p>
-        Short bio about yourself goes here. Keep it focused and authentic.
+        I work on hiring systems in crypto: defining what good looks like, evaluating it with signal, and scaling teams without lowering standards.
       </p>
 
       <p>
-        Another paragraph if needed. Talk about what you do, what you care about,
-        or why you write.
+        This site is where I write in public—models, playbooks, and notes that make hiring clearer.
       </p>
 
-      <h2>Connect</h2>
       <ul>
-        <li><a href={SOCIAL_LINKS.twitter}>Twitter</a></li>
-        <li><a href={SOCIAL_LINKS.github}>GitHub</a></li>
-        <li><a href={`mailto:${SOCIAL_LINKS.email}`}>Email</a></li>
+        <li><a href="https://www.linkedin.com/in/mikeishiring/">LinkedIn</a></li>
+        <li><a href="https://x.com/Mikeishiring">X</a></li>
+        <li><a href="https://github.com/Mikeishiring">GitHub</a></li>
       </ul>
     </div>
   </div>

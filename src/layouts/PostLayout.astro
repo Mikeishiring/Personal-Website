@@ -4,6 +4,7 @@
  */
 import type { PostLayoutProps } from '../types';
 import BaseLayout from './BaseLayout.astro';
+import { TOPIC_SLUGS } from '../config';
 
 const { post, readingTime } = Astro.props as PostLayoutProps;
 const { title, date, topic, summary } = post.data;
@@ -25,8 +26,8 @@ const formattedDate = date.toLocaleDateString('en-US', {
         <span>·</span>
         <span>{readingTime} min read</span>
         <span>·</span>
-        <a 
-          href={`/t/${topic.toLowerCase()}`}
+        <a
+          href={`/t/${TOPIC_SLUGS[topic as keyof typeof TOPIC_SLUGS]}`}
           class="px-3 py-1 rounded-full border border-border hover:bg-panel motion-safe"
         >
           {topic}
@@ -43,8 +44,8 @@ const formattedDate = date.toLocaleDateString('en-US', {
     </div>
 
     <footer class="mt-16 pt-8 border-t border-border">
-      <a 
-        href={`/t/${topic.toLowerCase()}`}
+      <a
+        href={`/t/${TOPIC_SLUGS[topic as keyof typeof TOPIC_SLUGS]}`}
         class="text-muted hover:text-text motion-safe inline-flex items-center gap-2"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,6 +53,10 @@ const formattedDate = date.toLocaleDateString('en-US', {
         </svg>
         Back to {topic}
       </a>
+
+      <p class="text-faint text-sm mt-8">
+        © {new Date().getFullYear()} Mike. You can quote short excerpts with attribution and a link. Don't republish full posts without permission.
+      </p>
     </footer>
   </article>
 </BaseLayout>
