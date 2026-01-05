@@ -1,12 +1,11 @@
 ---
 /**
- * Homepage - Displays all blog posts with topic filtering
+ * Homepage - Displays all blog posts as a simple bullet list with topic filtering
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TopicPills from '../components/TopicPills.astro';
-import PostList from '../components/PostList.astro';
-import { TOPICS, SITE } from '../config';
+import { TOPICS, TOPIC_SLUGS, SITE } from '../config';
 import { filterPublishedPosts, sortPostsByDate } from '../lib/posts';
 
 const allPosts = await getCollection('posts');
@@ -15,14 +14,26 @@ const publishedPosts = sortPostsByDate(filterPublishedPosts(allPosts));
 
 <BaseLayout>
   <div class="max-w-2xl mx-auto px-6 py-12">
-    <div class="mb-8">
+    <p class="text-muted text-lg mb-4">{SITE.description}</p>
+    <div class="mb-6">
       <TopicPills topics={TOPICS} />
     </div>
 
-    <section>
-      <h2 class="text-xl font-medium mb-6">Latest</h2>
-      <PostList posts={publishedPosts} showSummaryForFirst={2} />
-    </section>
+    <ul class="list-disc list-inside space-y-2" id="posts-list">
+      {publishedPosts.map((post) => {
+        const topicSlug = TOPIC_SLUGS[post.data.topic as keyof typeof TOPIC_SLUGS];
+        return (
+          <li data-topic={topicSlug}>
+            <a
+              href={`/p/${post.id}`}
+              class="text-text hover:text-text/80 motion-safe underline decoration-muted hover:decoration-text"
+            >
+              {post.data.title}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
   </div>
 </BaseLayout>
 
@@ -33,14 +44,14 @@ const publishedPosts = sortPostsByDate(filterPublishedPosts(allPosts));
 
   function apply(topic) {
     // Filter posts
-    document.querySelectorAll('[data-topic]').forEach(row => {
-      const rowTopic = row.dataset.topic;
-      row.hidden = !(topic === 'all' || rowTopic === topic);
+    document.querySelectorAll('#posts-list li[data-topic]').forEach(li => {
+      const liTopic = li.getAttribute('data-topic');
+      li.hidden = !(topic === 'all' || liTopic === topic);
     });
 
     // Update pill states
-    document.querySelectorAll('[data-topic]').forEach(pill => {
-      const pillTopic = pill.dataset.topic;
+    document.querySelectorAll('button[data-topic]').forEach(pill => {
+      const pillTopic = pill.getAttribute('data-topic');
       pill.setAttribute('aria-pressed', (pillTopic === topic).toString());
     });
   }
@@ -52,7 +63,7 @@ const publishedPosts = sortPostsByDate(filterPublishedPosts(allPosts));
   document.querySelectorAll('button[data-topic]').forEach(button => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
-      const topic = e.currentTarget.dataset.topic;
+      const topic = e.currentTarget.getAttribute('data-topic');
       history.pushState(null, '', '#' + topic);
       apply(topic);
     });
