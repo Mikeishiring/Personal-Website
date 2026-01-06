@@ -11,6 +11,29 @@
 @tailwind utilities;
 
 /* ============================================
+   CSS VARIABLES FOR SPACING + TYPOGRAPHY
+   ============================================ */
+
+:root {
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 64px;
+
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+
+  --line-height-body: 1.65;
+  --line-height-heading: 1.2;
+}
+
+/* ============================================
    BASE STYLES
    ============================================ */
 
@@ -21,17 +44,66 @@
 
   html {
     @apply bg-bg text-text;
-    font-size: 16px;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-body);
   }
 
   body {
     @apply font-sans antialiased;
-    line-height: 1.65;
+    margin: 0;
+    padding: 0;
+    line-height: var(--line-height-body);
+  }
+
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: var(--spacing-lg) var(--spacing-md);
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply tracking-tight font-medium;
     letter-spacing: -0.02em;
+    line-height: var(--line-height-heading);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+  }
+
+  h1 {
+    font-size: var(--font-size-3xl);
+    margin-top: 0;
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-xl);
+  }
+
+  p {
+    margin-bottom: var(--spacing-md);
+  }
+
+  a {
+    @apply text-text underline decoration-muted hover:decoration-text motion-safe;
+    text-underline-offset: 2px;
+  }
+
+  ul, ol {
+    margin-bottom: var(--spacing-lg);
+    padding-left: var(--spacing-lg);
+  }
+
+  li {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin: var(--spacing-xl) 0;
   }
 
   time, .tabular {
@@ -61,65 +133,100 @@
    ============================================ */
 
 .prose {
-  @apply text-text max-w-reading mx-auto;
-  line-height: 1.65;
+  line-height: var(--line-height-body);
 }
 
 /* Headings */
 .prose h1 {
-  @apply text-3xl font-semibold mb-6 mt-12;
+  font-size: var(--font-size-3xl);
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
 }
 
 .prose h2 {
-  @apply text-2xl font-semibold mb-4 mt-10;
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
 }
 
 .prose h3 {
-  @apply text-xl font-medium mb-3 mt-8;
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
 }
 
 /* Paragraphs and text */
 .prose p {
-  @apply mb-6;
+  margin-bottom: var(--spacing-md);
 }
 
 .prose a {
-  @apply text-text underline decoration-muted hover:decoration-text motion-safe;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.4);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 200ms;
+}
+
+.prose a:hover {
+  text-decoration-color: rgba(255, 255, 255, 0.9);
 }
 
 /* Lists */
 .prose ul, .prose ol {
-  @apply mb-6 pl-8 space-y-2;
+  margin-bottom: var(--spacing-lg);
+  padding-left: var(--spacing-lg);
 }
 
 .prose li {
-  @apply leading-body;
+  margin-bottom: var(--spacing-xs);
+}
+
+.prose ul li::marker {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* Blockquotes */
 .prose blockquote {
-  @apply border-l-2 border-muted pl-6 text-muted italic my-6;
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  padding-left: var(--spacing-md);
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  margin: var(--spacing-lg) 0;
 }
 
 /* Code */
 .prose code {
-  @apply bg-panel px-2 py-1 rounded text-sm font-mono;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px var(--spacing-xs);
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
 
 .prose pre {
-  @apply bg-panel p-4 rounded my-6 overflow-x-auto;
+  background: rgba(255, 255, 255, 0.05);
+  padding: var(--spacing-md);
+  border-radius: 6px;
+  margin: var(--spacing-lg) 0;
+  overflow-x: auto;
 }
 
 .prose pre code {
-  @apply bg-transparent p-0;
+  background: transparent;
+  padding: 0;
 }
 
 /* Emphasis */
 .prose strong {
-  @apply font-semibold;
+  font-weight: 600;
 }
 
 /* Dividers */
 .prose hr {
-  @apply border-border my-12;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: var(--spacing-xl) 0;
 }

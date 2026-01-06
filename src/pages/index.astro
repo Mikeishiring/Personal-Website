@@ -1,76 +1,28 @@
 ---
 /**
- * Homepage - Displays all blog posts as a simple bullet list with topic filtering
+ * Homepage - Map of Mike
  */
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import TopicPills from '../components/TopicPills.astro';
-import { TOPICS, TOPIC_SLUGS, SITE } from '../config';
-import { filterPublishedPosts, sortPostsByDate } from '../lib/posts';
-
-const allPosts = await getCollection('posts');
-const publishedPosts = sortPostsByDate(filterPublishedPosts(allPosts));
+import { identity } from '../config/identity';
 ---
 
 <BaseLayout>
-  <div class="max-w-2xl mx-auto px-6 py-12">
-    <p class="text-muted text-lg mb-4">{SITE.description}</p>
-    <div class="mb-6">
-      <TopicPills topics={TOPICS} />
-    </div>
+  <h1>{identity.name}</h1>
+  <p>{identity.roleLine}</p>
+  <hr />
 
-    <ul class="list-disc list-inside space-y-2" id="posts-list">
-      {publishedPosts.map((post) => {
-        const topicSlug = TOPIC_SLUGS[post.data.topic as keyof typeof TOPIC_SLUGS];
-        return (
-          <li data-topic={topicSlug}>
-            <a
-              href={`/p/${post.id}`}
-              class="text-text hover:text-text/80 motion-safe underline decoration-muted hover:decoration-text"
-            >
-              {post.data.title}
-            </a>
-          </li>
-        );
-      })}
-    </ul>
-  </div>
+  <ul>
+    <li>Talent lead hiring across engineering + research for crypto infra.</li>
+    <li>Built and scaled talent functions across Engineering, Research, Product, and Ops.</li>
+    <li>~5,000 interviews (approx.) — I'm obsessed with signal over pedigree.</li>
+    <li>I started vibe coding out of spite to prove a friend wrong; now I ship weekly experiments.</li>
+    <li>Built: <a href="https://closing-table.pages.dev">Closing Table</a> — one-shot double-blind agreement without negotiation (fairness breaks privacy).</li>
+    <li>Built: <a href="https://spam-game.onrender.com">Spam Game</a> — competitive multiplayer timing-game visualizer; the click sound is addictive.</li>
+    <li>Building: Talent Intelligence Platform — scrape jobs + GitHub + narratives → infer capability demand + hiring edges.</li>
+    <li>Viewpoint: we're heading toward advisor-to-bot-army work; people will be judged on taste and how much they cared.</li>
+    <li>I write operator memos on hiring in crypto/tech, market signal, and tools that compress time-to-clarity.</li>
+    <li>Start here: read my <a href="/best">best work</a>.</li>
+  </ul>
+
+  <p>Follow me: <a href={identity.socials.x}>X</a> · <a href={identity.socials.linkedin}>LinkedIn</a> · <a href={identity.socials.github}>GitHub</a></p>
 </BaseLayout>
-
-<script>
-  function readHash() {
-    return location.hash.slice(1) || 'all';
-  }
-
-  function apply(topic) {
-    // Filter posts
-    document.querySelectorAll('#posts-list li[data-topic]').forEach(li => {
-      const liTopic = li.getAttribute('data-topic');
-      li.hidden = !(topic === 'all' || liTopic === topic);
-    });
-
-    // Update pill states
-    document.querySelectorAll('button[data-topic]').forEach(pill => {
-      const pillTopic = pill.getAttribute('data-topic');
-      pill.setAttribute('aria-pressed', (pillTopic === topic).toString());
-    });
-  }
-
-  // Initialize on load
-  apply(readHash());
-
-  // Handle pill clicks
-  document.querySelectorAll('button[data-topic]').forEach(button => {
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-      const topic = e.currentTarget.getAttribute('data-topic');
-      history.pushState(null, '', '#' + topic);
-      apply(topic);
-    });
-  });
-
-  // Handle back/forward navigation
-  window.addEventListener('hashchange', () => {
-    apply(readHash());
-  });
-</script>

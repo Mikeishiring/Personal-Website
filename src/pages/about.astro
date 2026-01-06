@@ -1,28 +1,24 @@
 ---
 /**
- * About Page - Personal bio and contact information
+ * About Page - Bullets only
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { identity } from '../config/identity';
 ---
 
-<BaseLayout title="About" description="Learn more about me">
-  <div class="max-w-reading mx-auto px-6 py-16">
-    <h1 class="text-4xl font-semibold mb-8 tracking-tight">About</h1>
-    
-    <div class="prose">
-      <p>
-        I work on hiring systems in crypto: defining what good looks like, evaluating it with signal, and scaling teams without lowering standards.
-      </p>
+<BaseLayout title="About">
+  <h1>About</h1>
+  <p>I hire for crypto infra and build hiring systems that find signal in messy markets.</p>
+  <hr />
 
-      <p>
-        This site is where I write in public—models, playbooks, and notes that make hiring clearer.
-      </p>
+  <ul>
+    <li>{identity.roleLine}</li>
+    <li>{identity.proofPoints[0]}</li>
+    <li>Background: underground diamond driller → recruiter → crypto infra talent operator.</li>
+    <li>I build tools and taxonomies to make hiring more explainable (and less vibes-based).</li>
+    <li>I'm currently building a talent intelligence platform that maps capability demand from jobs + GitHub + narratives.</li>
+    <li>I write operator memos: hiring signal, market movement, and the effects of AI on work.</li>
+  </ul>
 
-      <ul>
-        <li><a href="https://www.linkedin.com/in/mikeishiring/">LinkedIn</a></li>
-        <li><a href="https://x.com/Mikeishiring">X</a></li>
-        <li><a href="https://github.com/Mikeishiring">GitHub</a></li>
-      </ul>
-    </div>
-  </div>
+  <p>Follow: <a href={identity.socials.x}>X</a> / <a href={identity.socials.linkedin}>LinkedIn</a> / <a href={identity.socials.github}>GitHub</a></p>
 </BaseLayout>

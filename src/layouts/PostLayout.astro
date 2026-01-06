@@ -4,38 +4,25 @@
  */
 import type { PostLayoutProps } from '../types';
 import BaseLayout from './BaseLayout.astro';
-import { TOPIC_SLUGS } from '../config';
+import { identity } from '../config/identity';
 
 const { post, readingTime } = Astro.props as PostLayoutProps;
-const { title, date, topic, summary } = post.data;
+const { title, date, summary } = post.data;
 
 const formattedDate = date.toLocaleDateString('en-US', {
   year: 'numeric',
-  month: 'long',
+  month: 'short',
   day: 'numeric',
 });
 ---
 
 <BaseLayout title={title} description={summary}>
-  <article class="max-w-reading mx-auto px-6 py-16">
-    <header class="mb-12">
-      <h1 class="text-4xl font-semibold mb-4 tracking-tight">{title}</h1>
-      
-      <div class="flex items-center gap-3 text-muted text-sm mb-6 tabular">
-        <time datetime={date.toISOString()}>{formattedDate}</time>
-        <span>·</span>
-        <span>{readingTime} min read</span>
-        <span>·</span>
-        <a
-          href={`/t/${TOPIC_SLUGS[topic as keyof typeof TOPIC_SLUGS]}`}
-          class="px-3 py-1 rounded-full border border-border hover:bg-panel motion-safe"
-        >
-          {topic}
-        </a>
-      </div>
-
+  <article>
+    <header>
+      <h1>{title}</h1>
+      <p>{formattedDate} · {readingTime} min read</p>
       {summary && (
-        <p class="text-lg text-muted leading-body">{summary}</p>
+        <p style="color: rgba(255, 255, 255, 0.7); font-size: 18px; margin-bottom: var(--spacing-lg);">{summary}</p>
       )}
     </header>
 
@@ -43,20 +30,7 @@ const formattedDate = date.toLocaleDateString('en-US', {
       <slot />
     </div>
 
-    <footer class="mt-16 pt-8 border-t border-border">
-      <a
-        href={`/t/${TOPIC_SLUGS[topic as keyof typeof TOPIC_SLUGS]}`}
-        class="text-muted hover:text-text motion-safe inline-flex items-center gap-2"
-      >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-        Back to {topic}
-      </a>
-
-      <p class="text-faint text-sm mt-8">
-        © {new Date().getFullYear()} Mike. You can quote short excerpts with attribution and a link. Don't republish full posts without permission.
-      </p>
-    </footer>
+    <hr />
+    <p style="text-align: center; color: rgba(255, 255, 255, 0.7); margin: var(--spacing-lg) 0;">If this was useful, follow me on <a href={identity.socials.x}>X</a> and <a href={identity.socials.linkedin}>LinkedIn</a>.</p>
   </article>
 </BaseLayout>

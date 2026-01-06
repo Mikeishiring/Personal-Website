@@ -1,0 +1,35 @@
+---
+/**
+ * Best Page - Curated receipts and highest-signal posts
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { bestPosts } from '../data/bestPosts';
+---
+
+<BaseLayout title="Best">
+  <h1>Best</h1>
+  <p>Receipts: my best work and highest-signal posts.</p>
+  <p>If you only read one thing, start here. If you want the raw feed, follow me on X/LinkedIn.</p>
+
+  <h2>Start here</h2>
+  <ul>
+    {bestPosts.filter(post => post.pinned).map((post) => (
+      <li>
+        <a href={post.url}>{post.title}</a> ({post.platform})
+        <br />
+        <span style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">{post.whyItMatters}</span>
+      </li>
+    ))}
+  </ul>
+
+  <h2>More</h2>
+  <ul>
+    {bestPosts.filter(post => !post.pinned).map((post) => (
+      <li>
+        <a href={post.url}>{post.title}</a> ({post.platform})
+        <br />
+        <span style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">{post.whyItMatters}</span>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

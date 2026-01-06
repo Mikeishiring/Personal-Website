@@ -1,0 +1,28 @@
+---
+/**
+ * Projects Page - What/why/learned format for all projects
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { identity } from '../config/identity';
+---
+
+<BaseLayout title="Projects">
+  <h1>Projects</h1>
+  <p>Proof of shipping. Small experiments that sharpen my taste.</p>
+
+  <h2><a href={identity.currentBuilds[1].url}>Closing Table</a></h2>
+  <p><strong>What:</strong> One-shot double-blind price agreement without negotiation.</p>
+  <p><strong>Why:</strong> Negotiation is slow; I wanted a one-click mechanism for truth.</p>
+  <p><strong>Learned:</strong> "Fair" mechanisms tend to leak info; privacy and fairness fight each other.</p>
+
+  <h2><a href={identity.currentBuilds[2].url}>Spam Game</a></h2>
+  <p><strong>What:</strong> Competitive multiplayer timing-game visualizer.</p>
+  <p><strong>Why:</strong> Timing games are hard to explain; games make them visceral.</p>
+  <p><strong>Learned:</strong> Multiplayer adds real engineering pain—and sound design matters more than I expected.</p>
+
+  <h2>Talent Intelligence Platform</h2>
+  <p><em>In progress</em></p>
+  <p><strong>What:</strong> Scrape jobs + GitHub + narratives → infer capability demand + hiring edges.</p>
+  <p><strong>Why:</strong> Titles are bullshit; capabilities and signals move faster than org charts.</p>
+  <p><strong>Learned:</strong> The hard part isn't data collection, it's a taxonomy that doesn't lie.</p>
+</BaseLayout>

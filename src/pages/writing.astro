@@ -1,0 +1,26 @@
+---
+/**
+ * Writing Index - Chronological list of all posts with summaries
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { filterPublishedPosts, sortPostsByDate } from '../lib/posts';
+
+const allPosts = await getCollection('posts');
+const publishedPosts = sortPostsByDate(filterPublishedPosts(allPosts));
+---
+
+<BaseLayout title="Writing">
+  <h1>Writing</h1>
+  <p>Operator memos on hiring signal, markets, and tools.</p>
+
+  <ul>
+    {publishedPosts.map((post) => (
+      <li>
+        <a href={`/p/${post.id}`}>{post.data.title}</a> — {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+        <br />
+        <span style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">{post.data.summary}</span>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
